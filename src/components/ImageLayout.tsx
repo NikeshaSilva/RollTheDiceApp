@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 import DiceOne from '../../assets/One.png';
 import DiceTwo from '../../assets/Two.png';
@@ -15,10 +16,16 @@ import {
   View,
 } from 'react-native';
 
+const options = {
+  enableVibrateFallback: true,
+  ignoreAndroidSystemSettings: false,
+};
+
 const ImageLayout = () => {
   const [diceImage, setDiceImage] = useState<ImageSourcePropType>(DiceOne);
 
   const GenerateRandomNumber = () => {
+    ReactNativeHapticFeedback.trigger('impactLight', options);
     let randomNumber = Math.floor(Math.random() * 6) + 1;
 
     switch (randomNumber) {
