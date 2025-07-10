@@ -24,6 +24,21 @@ const options = {
 const ImageLayout = () => {
   const [diceImage, setDiceImage] = useState<ImageSourcePropType>(DiceOne);
 
+  const [backgroundColor, setBackgroundColor] = useState('#000000');
+
+  const generateColor = () => {
+    const hexRange = '0123456789ABCDEF';
+    let color = '#';
+    let range: number = 6;
+
+    for (let index = 0; index < range; index++) {
+      color += hexRange[Math.floor(Math.random() * 16)];
+    }
+
+    setBackgroundColor(color);
+    console.log(backgroundColor);
+  };
+
   const GenerateRandomNumber = () => {
     ReactNativeHapticFeedback.trigger('impactLight', options);
     let randomNumber = Math.floor(Math.random() * 6) + 1;
@@ -55,9 +70,15 @@ const ImageLayout = () => {
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: backgroundColor }]}>
         <Dice imageUrl={diceImage} />
-        <Pressable onPress={GenerateRandomNumber} style={styles.BtnStyles}>
+        <Pressable
+          onPress={() => {
+            GenerateRandomNumber();
+            generateColor();
+          }}
+          style={styles.BtnStyles}
+        >
           <Text style={styles.btnText}>Roll The Dice</Text>
         </Pressable>
       </View>
